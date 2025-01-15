@@ -58,6 +58,7 @@ class KJason private constructor(private val input: InputStream) {
      * json := element
      */
     private fun parseJson(): Any? {
+        nextToken()
         return parseElement()
     }
 

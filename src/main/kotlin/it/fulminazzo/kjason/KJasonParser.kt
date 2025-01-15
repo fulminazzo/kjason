@@ -166,7 +166,7 @@ class KJasonParser internal constructor(private val input: InputStream) {
     internal fun parseString(): String {
         consume(TokenType.DOUBLE_QUOTE)
         val list = mutableListOf<Char>()
-        while (lastRead.type != TokenType.DOUBLE_QUOTE) list.add(parseCharacter())
+        while (!matches(TokenType.DOUBLE_QUOTE)) list.add(parseCharacter())
         consume(TokenType.DOUBLE_QUOTE)
         return list.joinToString(separator = "")
     }

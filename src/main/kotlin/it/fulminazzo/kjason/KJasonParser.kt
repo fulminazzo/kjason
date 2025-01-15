@@ -44,13 +44,16 @@ class KJasonParser internal constructor(private val input: InputStream) {
     }
 
     /**
-     * value := object | array | string | number
+     * value := true | false | null | object | array | string | number
      */
-    private fun parseValue(): Any {
-        if (matches(TokenType.OPEN_BRACE)) return parseObject()
-        else if (matches(TokenType.OPEN_BRACKET)) return parseArray()
-        else if (matches(TokenType.DOUBLE_QUOTE)) return parseString()
-        else return parseNumber()
+    private fun parseValue(): Any? {
+        return if (matches(TokenType.LOW_T)) parseTrue()
+        else if (matches(TokenType.LOW_F)) parseFalse()
+        else if (matches(TokenType.LOW_N)) parseNull()
+        else if (matches(TokenType.OPEN_BRACE)) parseObject()
+        else if (matches(TokenType.OPEN_BRACKET)) parseArray()
+        else if (matches(TokenType.DOUBLE_QUOTE)) parseString()
+        else parseNumber()
     }
 
     private fun parseTrue(): Boolean {
@@ -81,7 +84,7 @@ class KJasonParser internal constructor(private val input: InputStream) {
     /**
      * object := '{' (ws | members) '}'
      */
-    internal fun parseObject(): Map<Any, Any> {
+    internal fun parseObject(): Map<String, Any?> {
         consume(TokenType.OPEN_BRACE)
         parseWS()
         val map = if (!matches(TokenType.CLOSE_BRACE))
@@ -94,7 +97,7 @@ class KJasonParser internal constructor(private val input: InputStream) {
     /**
      * members := (member ',')* member
      */
-    private fun parseMembers(): List<Pair<Any, Any>> {
+    private fun parseMembers(): List<Pair<String, Any?>> {
         val list = mutableListOf(parseMember())
         while (matches(TokenType.COMMA)) {
             consume(TokenType.COMMA)
@@ -106,7 +109,7 @@ class KJasonParser internal constructor(private val input: InputStream) {
     /**
      * member := ws string ws ':' element
      */
-    private fun parseMember(): Pair<Any, Any> {
+    private fun parseMember(): Pair<String, Any?> {
         parseWS()
         val key = parseString()
         parseWS()
@@ -118,7 +121,7 @@ class KJasonParser internal constructor(private val input: InputStream) {
     /**
      * array := '[' (ws | elements) ']'
      */
-    internal fun parseArray(): Array<Any> {
+    internal fun parseArray(): Array<Any?> {
         consume(TokenType.OPEN_BRACKET)
         parseWS()
         val array = if (!matches(TokenType.CLOSE_BRACKET))
@@ -131,7 +134,7 @@ class KJasonParser internal constructor(private val input: InputStream) {
     /**
      * elements := (element ',')* element
      */
-    private fun parseElements(): List<Any> {
+    private fun parseElements(): List<Any?> {
         val list = mutableListOf(parseElement())
         while (matches(TokenType.COMMA)) {
             consume(TokenType.COMMA)
@@ -143,7 +146,7 @@ class KJasonParser internal constructor(private val input: InputStream) {
     /**
      * element := ws value ws
      */
-    private fun parseElement(): Any {
+    private fun parseElement(): Any? {
         parseWS()
         val t = parseValue()
         parseWS()

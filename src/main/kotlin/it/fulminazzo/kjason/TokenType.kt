@@ -18,13 +18,19 @@ enum class TokenType(private val regex: String) {
     companion object {
 
         @JvmStatic
-        fun fromString(read: String): TokenType {
+        fun fromString(read: String): Token {
             for (tokenType in entries.filter { it != EOF })
                 if (read.matches(Regex(tokenType.regex)))
-                    return tokenType
-            return EOF
+                    return Token(tokenType, tokenType.regex)
+            return eof()
+        }
+
+        fun eof(): Token {
+            return Token(EOF, "")
         }
 
     }
 
 }
+
+data class Token(val type: TokenType, val value: String)

@@ -6,7 +6,7 @@ class TokenTypeTest extends Specification {
 
     def 'fromString of #value should return #expected'() {
         when:
-        def actual = TokenType.fromString(value)
+        def actual = TokenType.fromString(value).type
 
         then:
         actual == expected

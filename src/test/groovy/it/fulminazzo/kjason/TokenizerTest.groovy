@@ -9,7 +9,7 @@ class TokenizerTest extends Specification {
         def tokenizer = new Tokenizer('        0')
 
         when:
-        def read = tokenizer.nextTokenSpaceless$KJason()
+        def read = tokenizer.nextTokenSpaceless$KJason().type
 
         then:
         read == TokenType.ZERO
@@ -20,11 +20,11 @@ class TokenizerTest extends Specification {
         def tokenizer = new Tokenizer(value)
 
         when:
-        def read = tokenizer.nextToken$KJason()
+        def read = tokenizer.nextToken$KJason().type
 
         then:
         read == expected
-        tokenizer.lastRead == expected
+        tokenizer.lastRead.type == expected
 
         where:
         value || expected

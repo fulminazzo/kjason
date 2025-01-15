@@ -45,10 +45,9 @@ class KJasonParser internal constructor(private val input: InputStream) {
      * integer := digit | onenine digits | '-' digit | '-' onenine digits
      */
     fun parseInteger(): Int {
-        var number: String = if (matches(TokenType.MINUS)) {
-            consume(TokenType.MINUS)
-            "-"
-        } else ""
+        var number: String = if (matches(TokenType.MINUS))
+            consume(TokenType.MINUS).value
+        else ""
         number += if (matches(TokenType.ZERO)) consume(TokenType.ZERO).value
         else parseDigits()
         return number.toInt()

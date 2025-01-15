@@ -5,7 +5,7 @@ class ParserException private constructor(message: String) : RuntimeException(me
     companion object {
 
         fun expected(tokenType: TokenType, token: Token): ParserException {
-            return ParserException("Expected $tokenType but got ${token.value}")
+            return ParserException("Expected $tokenType but got '${token.value}'")
         }
 
     }

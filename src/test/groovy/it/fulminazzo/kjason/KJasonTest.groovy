@@ -4,6 +4,27 @@ import spock.lang.Specification
 
 class KJasonTest extends Specification {
 
+    def 'write of #target should return #expected'() {
+        when:
+        def actual = KJason.write(target)
+
+        then:
+        actual == expected
+
+        where:
+        target                               || expected
+        true                                 || 'true'
+        false                                || 'false'
+        null                                 || 'null'
+        [1: true, 2: 10, 3: 'Hello, World!'] || '{"1": true, "2": 10, "3": "Hello, World!"}'
+        [1, 2, 3]                            || '[1, 2, 3]'
+        [true, false].toArray()              || '[true, false]'
+        'Hello, world!'                      || '"Hello, world!"'
+        10                                   || '10'
+        10.12                                || '10.12'
+        new MockClass()                      || '{"first": 1, "second": 2, "third": 3}'
+    }
+
     def 'parse of #target did not return the expected object'() {
         when:
         def parsed = KJason.parse(target)
@@ -232,6 +253,13 @@ class KJasonTest extends Specification {
         value || expected
         '0'   || TokenType.ZERO
         ''    || TokenType.EOF
+    }
+
+    class MockClass {
+        int first = 1
+        int second = 2
+        int third = 3
+
     }
 
 }

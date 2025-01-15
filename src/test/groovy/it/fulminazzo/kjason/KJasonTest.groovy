@@ -19,6 +19,21 @@ class KJasonTest extends Specification {
         ]
     }
 
+    def 'consume with invalid token types should throw exception'() {
+        given:
+        def tokenizer = new KJason('')
+
+        and:
+        def message = ParserException.expected(TokenType.ZERO, new Token(TokenType.EOF, '')).message
+
+        when:
+        tokenizer.consume(TokenType.ZERO)
+
+        then:
+        def e = thrown(ParserException)
+        e.message == message
+    }
+
     def 'parseValue of #value should return #expected'() {
         given:
         def tokenizer = new KJason(value)

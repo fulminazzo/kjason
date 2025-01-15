@@ -52,6 +52,19 @@ class KJasonParser internal constructor(private val input: InputStream) {
     }
 
     /**
+     * array := '[' (ws | elements) ']'
+     */
+    private fun parseArray(): Array<Any> {
+        consume(TokenType.OPEN_BRACKET)
+        parseWS()
+        val array = if (!matches(TokenType.CLOSE_BRACKET))
+            parseElements().toTypedArray()
+        else arrayOf()
+        consume(TokenType.CLOSE_BRACKET)
+        return array
+    }
+
+    /**
      * elements := (element ,)* element
      */
     private fun parseElements(): List<Any> {

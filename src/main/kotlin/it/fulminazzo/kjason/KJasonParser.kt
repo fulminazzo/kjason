@@ -63,7 +63,7 @@ class KJasonParser internal constructor(private val input: InputStream) {
         ).type) {
             TokenType.DOUBLE_QUOTE -> "\""
             TokenType.BACKSLASH -> "\\"
-            TokenType.FORWARDSLASH -> "//"
+            TokenType.FORWARDSLASH -> "/"
             TokenType.LOW_B -> "\b"
             TokenType.LOW_F -> "\u000c"
             TokenType.LOW_N -> "\n"

@@ -11,6 +11,19 @@ class Tokenizer(private val input: InputStream) {
 
     private constructor(file: File) : this(file.inputStream())
 
+    internal fun nextTokenSpaceless(): TokenType {
+        var token: TokenType
+        do token = nextToken()
+        while (token == TokenType.SPACE)
+        return token
+    }
+
+    internal fun nextToken(): TokenType {
+        return if (input.available() > 0)
+            TokenType.fromString(input.read().toChar().toString())
+        else TokenType.EOF
+    }
+
 }
 
 enum class TokenType(private val regex: String) {

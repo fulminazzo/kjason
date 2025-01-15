@@ -1,0 +1,66 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+# This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
+
+name: Tests
+
+on:
+  push:
+    branches: [ "main", "master", "test" ]
+
+jobs:
+  jacoco:
+    runs-on: ubuntu-latest
+    permissions: write-all
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Git
+        run: |-
+          git config user.name "GitHub Actions"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        shell: bash
+
+      - name: Delete badges Branch If Exists (Local)
+        if: ${{ github.ref_name != 'badges' }}
+        run: |-
+          if [[ $(git branch | grep badges) ]]; then git branch -d badges; fi
+
+      - name: Delete badges Branch If Exists (Remote)
+        if: ${{ github.ref_name != 'badges' }}
+        run: |-
+          if [[ $(git ls-remote | grep badges) ]]; then git push origin --delete badges; fi
+
+      - name: Checkout to badges Branch
+        if: ${{ github.ref_name != 'badges' }}
+        run: |-
+          git checkout -b badges
+        shell: bash
+
+      - name: Set up JDK 8
+        uses: actions/setup-java@v4
+        with:
+          java-version: '8'
+          distribution: 'temurin'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@417ae3ccd767c252f5661f1ace9f835f9654f2b5
+
+      - name: Test with Gradle Wrapper
+        run: ./gradlew testCodeCoverageReport
+
+      - name: Generate JaCoCo Badge
+        uses: cicirello/jacoco-badge-generator@v2
+        with:
+          generate-branches-badge: true
+          jacoco-csv-file: build/reports/jacoco/testCodeCoverageReport/testCodeCoverageReport.csv
+
+      - name: Update and Push JaCoCo Badge
+        run: |-
+          git add .
+          if [[ $(git commit -m "Update Jacoco badge") ]]; then git push origin badges; fi
+        shell: bash

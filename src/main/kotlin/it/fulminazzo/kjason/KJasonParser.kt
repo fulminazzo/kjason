@@ -3,6 +3,7 @@ package it.fulminazzo.kjason
 import java.io.ByteArrayInputStream
 import java.io.File
 import java.io.InputStream
+import java.nio.charset.Charset
 
 class KJasonParser internal constructor(private val input: InputStream) {
     private val DIGITS = arrayOf(TokenType.ZERO, TokenType.ONENINE)
@@ -39,6 +40,22 @@ class KJasonParser internal constructor(private val input: InputStream) {
         val curr = lastRead
         nextToken()
         return curr
+    }
+
+    /**
+     * escape := '"' | '\' | '/' | 'b' | 'f' | 'n' | 'r' | 't' | 'u' hex hex hex hex
+     */
+    private fun parseEscape(): String {
+        val escapeChar = "\\"
+        if (matches(TokenType.LOW_U)) {
+            var unicode = "$escapeChar${consume(TokenType.LOW_U).value}"
+            for (i in 1..4) unicode += parseHex()
+            return unicode.toByteArray().toString(Charset.forName("UNICODE"))
+        } else return "$escapeChar${consume(TokenType.E,
+            TokenType.LOW_B, TokenType.LOW_F, TokenType.LOW_N,
+            TokenType.LOW_R, TokenType.LOW_T, TokenType.DOUBLE_QUOTE,
+            TokenType.BACKSLASH, TokenType.FORWARDSLASH
+        ).value}"
     }
 
     /**

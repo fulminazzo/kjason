@@ -4,6 +4,29 @@ import spock.lang.Specification
 
 class KJasonParserTest extends Specification {
 
+    def 'parseNumber of #value should return #expected'() {
+        given:
+        def tokenizer = new KJasonParser(value)
+
+        and:
+        tokenizer.nextToken$KJason()
+
+        when:
+        def actual = tokenizer.parseNumber$KJason()
+
+        then:
+        actual == expected
+
+        where:
+        value      || expected
+        '10'       || 10.0
+        '10.12'    || 10.12
+        '10E2'     || 1000.0
+        '10E-2'    || 0.1
+        '10.12E2'  || 1012.0
+        '10.12E-2' || 0.1012 as double
+    }
+
     def 'parseInteger of #value should return #expected'() {
         given:
         def tokenizer = new KJasonParser(value)

@@ -42,6 +42,11 @@ class KJasonParser internal constructor(private val input: InputStream) {
     }
 
     /**
+     * hex := digit | 'A'-'F' | 'a'-'f'
+     */
+    private fun parseHex(): String = consume(*DIGITS, TokenType.AF).value
+
+    /**
      * number := integer fraction exponent
      */
     internal fun parseNumber(): Double {

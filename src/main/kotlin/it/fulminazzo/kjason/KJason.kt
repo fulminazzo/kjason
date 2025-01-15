@@ -42,8 +42,8 @@ class KJason private constructor(private val input: InputStream) {
                 is Map<*, *> -> "{${data.entries.joinToString(", ") {
                     "${write(it.toString())}: ${write(it.value)}"
                 }}"
-                is Collection<*> -> "[${data.joinToString(", ") { write(data) }}]"
-                is Array<*> -> "[${data.joinToString(", ") { write(data) }}]"
+                is Collection<*> -> "[${data.joinToString(", ") { write(it) }}]"
+                is Array<*> -> "[${data.joinToString(", ") { write(it) }}]"
                 is String, is Number -> data.toString()
                 else -> write(data.javaClass.fields.associateBy({ write(it.name) }, { write(it.get(data)) }))
             }

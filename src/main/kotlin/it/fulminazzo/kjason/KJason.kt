@@ -12,6 +12,29 @@ class KJason private constructor(private val input: InputStream) {
 
     private constructor(file: File) : this(file.inputStream())
 
+    companion object {
+
+        @JvmStatic
+        fun parse(input: InputStream): Any? {
+            return parse(KJason(input))
+        }
+
+        @JvmStatic
+        fun parse(data: String): Any? {
+            return parse(KJason(data))
+        }
+
+        @JvmStatic
+        fun parse(file: File): Any? {
+            return parse(KJason(file))
+        }
+
+        private fun parse(parser: KJason): Any? {
+            return parser.parseJson()
+        }
+
+    }
+
     private fun nextToken(): Token {
         lastRead = if (input.available() > 0)
             TokenType.fromString(input.read().toChar().toString())

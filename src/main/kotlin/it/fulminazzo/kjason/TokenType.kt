@@ -8,6 +8,8 @@ enum class TokenType(private val regex: String) {
     PLUS("\\+"),
     // '-'
     MINUS("-"),
+    // ':'
+    COLON(":"),
     // '.'
     DOT("\\."),
     // ','

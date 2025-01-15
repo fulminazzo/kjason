@@ -1,17 +1,14 @@
 package it.fulminazzo.kjason
 
-import java.io.ByteArrayInputStream
 import java.io.File
 import java.io.InputStream
-import java.nio.charset.Charset
-import javax.xml.stream.events.Characters
 
 class KJasonParser internal constructor(private val input: InputStream) {
     private val DIGITS = arrayOf(TokenType.ZERO, TokenType.ONENINE)
 
     private var lastRead: Token = TokenType.eof()
 
-    internal constructor(raw: String) : this(ByteArrayInputStream(raw.toByteArray()))
+    internal constructor(raw: String) : this(raw.byteInputStream())
 
     internal constructor(file: File) : this(file.inputStream())
 

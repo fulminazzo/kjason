@@ -5,6 +5,8 @@ import java.io.File
 import java.io.InputStream
 
 class KJasonParser internal constructor(private val input: InputStream) {
+    private val DIGITS = arrayOf(TokenType.ZERO, TokenType.ONENINE)
+
     private var lastRead: Token = TokenType.eof()
 
     internal constructor(raw: String) : this(ByteArrayInputStream(raw.toByteArray()))
@@ -38,6 +40,33 @@ class KJasonParser internal constructor(private val input: InputStream) {
         nextToken()
         return curr
     }
+
+    /**
+     * integer := digit | onenine digits | '-' digit | '-' onenine digits
+     */
+    fun parseInteger(): Int {
+        var number: String = if (matches(TokenType.MINUS)) {
+            consume(TokenType.MINUS)
+            "-"
+        } else ""
+        number += if (matches(TokenType.ZERO)) consume(TokenType.ZERO).value
+        else parseDigits()
+        return number.toInt()
+    }
+
+    /**
+     * digits := digit digits?
+     */
+    private fun parseDigits(): String {
+        val digit = parseDigit()
+        return if (matches(*DIGITS)) digit + parseDigits()
+        else digit
+    }
+
+    /**
+     * digit := '0' | ONENINE
+     */
+    private fun parseDigit(): String = consume(*DIGITS).value
 
 }
 

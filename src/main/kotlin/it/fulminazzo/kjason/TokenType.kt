@@ -10,6 +10,8 @@ enum class TokenType(private val regex: String) {
     MINUS("-"),
     // '.'
     DOT("\\."),
+    // ','
+    COMMA(","),
 
     // '0'
     ZERO("0"),

@@ -67,7 +67,7 @@ class KJasonParser internal constructor(private val input: InputStream) {
     private fun parseFalse(): Boolean {
         consume(TokenType.LOW_F)
         consume(TokenType.LOW_A)
-        consume(TokenType.LOW_F)
+        consume(TokenType.LOW_L)
         consume(TokenType.LOW_S)
         consume(TokenType.LOW_E)
         return false

@@ -32,8 +32,8 @@ enum class TokenType(private val regex: String) {
 
     // 'CR' | 'LF' | 'TAB' | 'SPACE'
     WS("[\r\n\t ]"),
-    // '!' | '#' - '[' | ']' - '~' | UNICODE
-    CHAR("!|[#-\\[]|[\\]-~]|\\p{L}"),
+    // ' ' - '!' | '#' - '[' | ']' - '~' | UNICODE
+    CHAR("[! ]|[#-\\[]|[\\]-~]|\\p{L}"),
 
     /*
         COMPARISONS TOKEN

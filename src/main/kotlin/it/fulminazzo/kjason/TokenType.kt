@@ -28,6 +28,10 @@ enum class TokenType(private val regex: String) {
 
     EOF("");
 
+    fun matches(token: Token): Boolean {
+        return regex.toRegex().matches(token.value)
+    }
+
     companion object {
 
         @JvmStatic

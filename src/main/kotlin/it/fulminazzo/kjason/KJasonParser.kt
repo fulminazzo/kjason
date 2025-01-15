@@ -52,12 +52,10 @@ class KJasonParser internal constructor(private val input: InputStream) {
     }
 
     /**
-     * integer := digit | onenine digits | '-' digit | '-' onenine digits
+     * integer := sign digit | sign onenine digits
      */
     fun parseInteger(): Int {
-        var number: String = if (matches(TokenType.MINUS))
-            consume(TokenType.MINUS).value
-        else ""
+        var number: String = parseSign()
         number += if (matches(TokenType.ZERO)) consume(TokenType.ZERO).value
         else parseDigits()
         return number.toInt()

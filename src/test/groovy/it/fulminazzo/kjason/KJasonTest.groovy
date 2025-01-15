@@ -21,13 +21,13 @@ class KJasonTest extends Specification {
 
     def 'consume with invalid token types should throw exception'() {
         given:
-        def tokenizer = new KJason('')
+        def kjason = new KJason('')
 
         and:
         def message = ParserException.expected(TokenType.ZERO, new Token(TokenType.EOF, '')).message
 
         when:
-        tokenizer.consume(TokenType.ZERO)
+        kjason.consume(TokenType.ZERO)
 
         then:
         def e = thrown(ParserException)
@@ -36,13 +36,13 @@ class KJasonTest extends Specification {
 
     def 'parseValue of #value should return #expected'() {
         given:
-        def tokenizer = new KJason(value)
+        def kjason = new KJason(value)
 
         and:
-        tokenizer.nextToken()
+        kjason.nextToken()
 
         when:
-        def actual = tokenizer.parseValue()
+        def actual = kjason.parseValue()
 
         then:
         actual == expected
@@ -61,13 +61,13 @@ class KJasonTest extends Specification {
 
     def 'parseObject of #value should return #expected'() {
         given:
-        def tokenizer = new KJason(value)
+        def kjason = new KJason(value)
 
         and:
-        tokenizer.nextToken()
+        kjason.nextToken()
 
         when:
-        def actual = tokenizer.parseObject()
+        def actual = kjason.parseObject()
 
         then:
         actual == expected
@@ -83,13 +83,13 @@ class KJasonTest extends Specification {
 
     def 'parseArray of #value should return #expected'() {
         given:
-        def tokenizer = new KJason(value)
+        def kjason = new KJason(value)
 
         and:
-        tokenizer.nextToken()
+        kjason.nextToken()
 
         when:
-        def actual = tokenizer.parseArray()
+        def actual = kjason.parseArray()
 
         then:
         actual == expected
@@ -104,13 +104,13 @@ class KJasonTest extends Specification {
 
     def 'parseString of #value should return #expected'() {
         given:
-        def tokenizer = new KJason(value)
+        def kjason = new KJason(value)
 
         and:
-        tokenizer.nextToken()
+        kjason.nextToken()
 
         when:
-        def actual = tokenizer.parseString()
+        def actual = kjason.parseString()
 
         then:
         actual == expected
@@ -124,13 +124,13 @@ class KJasonTest extends Specification {
 
     def 'parseCharacter of #value should return #expected'() {
         given:
-        def tokenizer = new KJason(value)
+        def kjason = new KJason(value)
 
         and:
-        tokenizer.nextToken()
+        kjason.nextToken()
 
         when:
-        def actual = tokenizer.parseCharacter()
+        def actual = kjason.parseCharacter()
 
         then:
         actual == expected
@@ -144,13 +144,13 @@ class KJasonTest extends Specification {
 
     def 'parseEscape of #value should return #expected'() {
         given:
-        def tokenizer = new KJason(value)
+        def kjason = new KJason(value)
 
         and:
-        tokenizer.nextToken()
+        kjason.nextToken()
 
         when:
-        def actual = tokenizer.parseEscape()
+        def actual = kjason.parseEscape()
 
         then:
         actual == expected
@@ -170,13 +170,13 @@ class KJasonTest extends Specification {
 
     def 'parseNumber of #value should return #expected'() {
         given:
-        def tokenizer = new KJason(value)
+        def kjason = new KJason(value)
 
         and:
-        tokenizer.nextToken()
+        kjason.nextToken()
 
         when:
-        def actual = tokenizer.parseNumber()
+        def actual = kjason.parseNumber()
 
         then:
         actual == expected
@@ -193,13 +193,13 @@ class KJasonTest extends Specification {
 
     def 'parseInteger of #value should return #expected'() {
         given:
-        def tokenizer = new KJason(value)
+        def kjason = new KJason(value)
 
         and:
-        tokenizer.nextToken()
+        kjason.nextToken()
 
         when:
-        def actual = tokenizer.parseInteger()
+        def actual = kjason.parseInteger()
 
         then:
         actual == expected
@@ -219,14 +219,14 @@ class KJasonTest extends Specification {
 
     def 'nextToken of #value should return #expected'() {
         given:
-        def tokenizer = new KJason(value)
+        def kjason = new KJason(value)
 
         when:
-        def read = tokenizer.nextToken().type
+        def read = kjason.nextToken().type
 
         then:
         read == expected
-        tokenizer.lastRead.type == expected
+        kjason.lastRead.type == expected
 
         where:
         value || expected

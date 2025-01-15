@@ -4,6 +4,21 @@ import spock.lang.Specification
 
 class KJasonTest extends Specification {
 
+    def 'parse of #target did not return the expected object'() {
+        when:
+        def parsed = KJason.parse(target)
+
+        then:
+        parsed == ['hello': 'world!']
+
+        where:
+        target << [
+                '{"hello": "world!"}',
+                new File('build/resources/test/test_file.json'),
+                new File('build/resources/test/test_file.json').newInputStream(),
+        ]
+    }
+
     def 'parseValue of #value should return #expected'() {
         given:
         def tokenizer = new KJason(value)

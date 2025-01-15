@@ -46,7 +46,13 @@ class KJason private constructor(private val input: InputStream) {
                 is Array<*> -> "[${data.joinToString(", ") { write(it) }}]"
                 is String -> "\"$data\""
                 is Number -> data.toString()
-                else -> write(data.javaClass.fields.associateBy({ write(it.name) }, { write(it.get(data)) }))
+                else -> write(
+                    data.javaClass.declaredFields
+                        .filter { !it.name.contains("$") }
+                        .filter { !it.name.equals("metaClass") } // for Groovy support
+                        .onEach { it.isAccessible = true }
+                        .associateBy({ it.name }, { it.get(data) })
+                )
             }
         }
 

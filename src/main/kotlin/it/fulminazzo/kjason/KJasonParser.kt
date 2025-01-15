@@ -53,6 +53,18 @@ class KJasonParser internal constructor(private val input: InputStream) {
     }
 
     /**
+     * members := (member ,)* member
+     */
+    private fun parseMembers(): List<Pair<Any, Any>> {
+        val list = mutableListOf(parseMember())
+        while (matches(TokenType.COMMA)) {
+            consume(TokenType.COMMA)
+            list.add(parseMember())
+        }
+        return list
+    }
+
+    /**
      * member := ws string ws ':' element
      */
     private fun parseMember(): Pair<Any, Any> {

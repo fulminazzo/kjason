@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream
 import java.io.File
 import java.io.InputStream
 import java.nio.charset.Charset
+import javax.xml.stream.events.Characters
 
 class KJasonParser internal constructor(private val input: InputStream) {
     private val DIGITS = arrayOf(TokenType.ZERO, TokenType.ONENINE)
@@ -44,6 +45,15 @@ class KJasonParser internal constructor(private val input: InputStream) {
             }
         throw ParserException.expected(tokenTypes[0], lastRead)
     }
+
+    /**
+     * character := '!' | '#' - '[' | ']' - '~' | UNICODE | '\' escape
+     */
+    internal fun parseCharacter(): Char =
+        (if (matches(TokenType.BACKSLASH)) {
+            consume(TokenType.BACKSLASH)
+            parseEscape()
+        } else consume(TokenType.CHAR).value).toCharArray()[0]
 
     /**
      * escape := '"' | '\' | '/' | 'b' | 'f' | 'n' | 'r' | 't' | 'u' hex hex hex hex

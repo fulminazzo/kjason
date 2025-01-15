@@ -33,7 +33,7 @@ enum class TokenType(private val regex: String) {
     LOW_U("u"),
 
     DOUBLE_QUOTE("\""),
-    BACKSLASH("\\"),
+    BACKSLASH("\\\\"),
     FORWARDSLASH("/"),
 
     EOF("");

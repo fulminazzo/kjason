@@ -2,11 +2,11 @@ package it.fulminazzo.kjason
 
 import spock.lang.Specification
 
-class TokenizerTest extends Specification {
+class KJasonParserTest extends Specification {
 
     def 'nextTokenSpaceless should ignore all the spaces before a Token'() {
         given:
-        def tokenizer = new Tokenizer('        0')
+        def tokenizer = new KJasonParser('        0')
 
         when:
         def read = tokenizer.nextTokenSpaceless$KJason().type
@@ -17,7 +17,7 @@ class TokenizerTest extends Specification {
 
     def 'nextToken of #value should return #expected'() {
         given:
-        def tokenizer = new Tokenizer(value)
+        def tokenizer = new KJasonParser(value)
 
         when:
         def read = tokenizer.nextToken$KJason().type

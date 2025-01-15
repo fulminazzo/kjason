@@ -4,7 +4,7 @@ import java.io.ByteArrayInputStream
 import java.io.File
 import java.io.InputStream
 
-class Tokenizer internal constructor(private val input: InputStream) {
+class KJasonParser internal constructor(private val input: InputStream) {
     private var lastRead: Token = TokenType.eof()
 
     internal constructor(raw: String) : this(ByteArrayInputStream(raw.toByteArray()))

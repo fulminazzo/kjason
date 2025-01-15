@@ -19,16 +19,15 @@ class KJasonParserTest extends Specification {
 
         where:
         value     || expected
-        "\\\""    || "\""
-        "\\\'"    || "\'"
-        "\\\\"    || "\\"
-        "\\/"     || "/"
-        "\\b"     || "\b"
-        "\\f"     || "\f"
-        "\\n"     || "\n"
-        "\\r"     || "\r"
-        "\\t"     || "\t"
-        "\\u4321" || "䌡"
+        "\""    || "\""
+        "\\"    || "\\"
+        "/"     || "/"
+        "b"     || "\b"
+        "f"     || "\f"
+        "n"     || "\n"
+        "r"     || "\r"
+        "t"     || "\t"
+        "u4321" || "䌡"
     }
 
     def 'parseNumber of #value should return #expected'() {

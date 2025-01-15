@@ -49,11 +49,13 @@ class KJasonParser internal constructor(private val input: InputStream) {
      * escape := '"' | '\' | '/' | 'b' | 'f' | 'n' | 'r' | 't' | 'u' hex hex hex hex
      */
     private fun parseEscape(): String {
-        val escapeChar = "\\"
         if (matches(TokenType.LOW_U)) {
-            var unicode = "$escapeChar${consume(TokenType.LOW_U).value}"
-            for (i in 1..4) unicode += parseHex()
-            return unicode.toByteArray().toString(Charset.forName("UNICODE"))
+            consume(TokenType.LOW_U)
+            return (1..4)
+                .joinToString("") { parseHex() }
+                .toInt(16)
+                .toChar()
+                .toString()
         } else return when (consume(
             TokenType.DOUBLE_QUOTE,
             TokenType.BACKSLASH,

@@ -42,6 +42,16 @@ class KJasonParser internal constructor(private val input: InputStream) {
     }
 
     /**
+     * number := integer fraction exponent
+     */
+    fun parseNumber(): Double {
+        var integer = parseInteger().toString()
+        if (matches(TokenType.DOT)) integer += parseFraction()
+        if (matches(TokenType.E)) integer += parseExponent()
+        return integer.toDouble()
+    }
+
+    /**
      * integer := digit | onenine digits | '-' digit | '-' onenine digits
      */
     fun parseInteger(): Int {
@@ -66,6 +76,25 @@ class KJasonParser internal constructor(private val input: InputStream) {
      * digit := '0' | ONENINE
      */
     private fun parseDigit(): String = consume(*DIGITS).value
+
+    /**
+     * fraction := '.' digits
+     */
+    private fun parseFraction(): String = consume(TokenType.DOT).value + parseDigits()
+
+    /**
+     * exponent := ('E' | 'e') sign digits
+     */
+    private fun parseExponent(): String = consume(TokenType.E).value + parseSign() + parseDigits()
+
+    /**
+     * sign := '' | '+' | '-'
+     */
+    private fun parseSign(): String {
+        return if (matches(TokenType.PLUS, TokenType.MINUS))
+            consume(TokenType.PLUS, TokenType.MINUS).value
+        else ""
+    }
 
 }
 

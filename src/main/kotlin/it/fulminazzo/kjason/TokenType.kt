@@ -1,23 +1,30 @@
 package it.fulminazzo.kjason
 
 enum class TokenType(private val regex: String) {
+    // 'A'-'F' | 'a'-'f'
+    AF("[A-Fa-f]"),
+
     // '+'
     PLUS("\\+"),
     // '-'
     MINUS("-"),
     // '.'
     DOT("\\."),
-    // 'E' | 'e'
-    E("E|e"),
 
     // '0'
     ZERO("0"),
 
-    // '1'.'9'
+    // '1'-'9'
     ONENINE("[1-9]"),
 
     // 'CR' | 'LF' | 'TAB' | 'SPACE'
     SPACE("[\r\n\t ]"),
+
+    /*
+        COMPARISONS TOKEN
+     */
+    // 'E' | 'e'
+    E("E|e"),
 
     EOF("");
 

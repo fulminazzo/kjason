@@ -53,6 +53,18 @@ class KJasonParser internal constructor(private val input: InputStream) {
     }
 
     /**
+     * member := ws string ws ':' element
+     */
+    private fun parseMember(): Pair<Any, Any> {
+        parseWS()
+        val key = parseString()
+        parseWS()
+        consume(TokenType.COLON)
+        val value = parseElement()
+        return Pair(key, value)
+    }
+
+    /**
      * array := '[' (ws | elements) ']'
      */
     internal fun parseArray(): Array<Any> {

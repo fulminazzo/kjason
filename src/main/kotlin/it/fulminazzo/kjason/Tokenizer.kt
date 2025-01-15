@@ -1,6 +1,16 @@
 package it.fulminazzo.kjason
 
-class Tokenizer {
+import java.io.ByteArrayInputStream
+import java.io.File
+import java.io.InputStream
+
+class Tokenizer(private val input: InputStream) {
+    private var lastRead: TokenType = TokenType.EOF
+
+    private constructor(raw: String) : this(ByteArrayInputStream(raw.toByteArray()))
+
+    private constructor(file: File) : this(file.inputStream())
+
 }
 
 enum class TokenType(private val regex: String) {

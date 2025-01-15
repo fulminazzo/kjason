@@ -27,10 +27,10 @@ class KJasonParser internal constructor(private val input: InputStream) {
         return lastRead
     }
 
-    private fun matches(vararg tokenTypes: TokenType) = tokenTypes.none { it == lastRead.type }
+    private fun matches(vararg tokenTypes: TokenType) = tokenTypes.any { it == lastRead.type }
 
     private fun expect(vararg tokenTypes: TokenType) {
-        if (matches(*tokenTypes))
+        if (!matches(*tokenTypes))
             throw ParserException.expected(tokenTypes[0], lastRead)
     }
 

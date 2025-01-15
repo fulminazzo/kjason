@@ -32,6 +32,13 @@ class KJasonParser private constructor(private val input: InputStream) {
     }
 
     /**
+     * json := element
+     */
+    private fun parseJson(): Any? {
+        return parseElement()
+    }
+
+    /**
      * value := true | false | null | object | array | string | number
      */
     private fun parseValue(): Any? {
@@ -268,4 +275,3 @@ class KJasonParser private constructor(private val input: InputStream) {
     }
 
 }
-

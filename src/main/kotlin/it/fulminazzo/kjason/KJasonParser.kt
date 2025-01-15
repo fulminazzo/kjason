@@ -53,6 +53,19 @@ class KJasonParser internal constructor(private val input: InputStream) {
     }
 
     /**
+     * object := '{' (ws | members) '}'
+     */
+    internal fun parseObject(): Map<Any, Any> {
+        consume(TokenType.OPEN_BRACE)
+        parseWS()
+        val map = if (!matches(TokenType.CLOSE_BRACE))
+            parseMembers().associateBy({ it.first }, { it.second })
+        else mapOf()
+        consume(TokenType.CLOSE_BRACE)
+        return map
+    }
+
+    /**
      * members := (member ',')* member
      */
     private fun parseMembers(): List<Pair<Any, Any>> {

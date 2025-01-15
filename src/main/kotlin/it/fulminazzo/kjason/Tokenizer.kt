@@ -19,9 +19,10 @@ class Tokenizer internal constructor(private val input: InputStream) {
     }
 
     internal fun nextToken(): Token {
-        return if (input.available() > 0)
+        lastRead = if (input.available() > 0)
             TokenType.fromString(input.read().toChar().toString())
         else TokenType.eof()
+        return lastRead
     }
 
 }

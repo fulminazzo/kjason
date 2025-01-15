@@ -53,6 +53,14 @@ class KJasonParser internal constructor(private val input: InputStream) {
         else return parseNumber()
     }
 
+    private fun parseNull(): Any? {
+        consume(TokenType.LOW_N)
+        consume(TokenType.LOW_U)
+        consume(TokenType.LOW_L)
+        consume(TokenType.LOW_L)
+        return null
+    }
+
     /**
      * object := '{' (ws | members) '}'
      */

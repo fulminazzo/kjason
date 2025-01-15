@@ -1,8 +1,14 @@
 package it.fulminazzo.kjason
 
 enum class TokenType(private val regex: String) {
+    // '+'
+    PLUS("\\+"),
     // '-'
     MINUS("-"),
+    // '.'
+    DOT("\\."),
+    // 'E' | 'e'
+    E("E|e"),
 
     // '0'
     ZERO("0"),

@@ -21,9 +21,9 @@ class KJasonParserTest extends Specification {
         value                              || expected
         '{}'                               || [:]
         '{\r\t\n \r\t\n \r\t\n \r\t\n }'   || [:]
-        '{1: "one", 2: "two", 3: "three"}' || [1: 'one', 2: 'two', 3: 'three']
+        '{"one": 1, "two": 2, "three": 3}' || ['one': 1, 'two': 2, 'three': 3]
         '{"Hello": true, "world": false}'  || ['Hello': true, 'world': true]
-        '{1 : 2}'                          || [1: 2]
+        '{"1" : 2}'                        || ['1': 2]
     }
 
     def 'parseArray of #value should return #expected'() {

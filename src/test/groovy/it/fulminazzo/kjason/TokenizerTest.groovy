@@ -4,6 +4,23 @@ import spock.lang.Specification
 
 class TokenizerTest extends Specification {
 
+    def 'nextToken of #value should return #expected'() {
+        given:
+        def tokenizer = new Tokenizer(value)
+
+        when:
+        def read = tokenizer.nextToken$KJason()
+
+        then:
+        read == expected
+        tokenizer.lastRead == expected
+
+        where:
+        value || expected
+        '0'   || TokenType.ZERO
+        ''    || TokenType.EOF
+    }
+
     def 'fromString of #value should return #expected'() {
         when:
         def actual = TokenType.fromString(value)

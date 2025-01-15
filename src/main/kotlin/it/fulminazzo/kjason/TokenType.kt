@@ -14,11 +14,13 @@ enum class TokenType(private val regex: String) {
     // '0'
     ZERO("0"),
 
-    // '1'-'9'
+    // '1' - '9'
     ONENINE("[1-9]"),
 
     // 'CR' | 'LF' | 'TAB' | 'SPACE'
     SPACE("[\r\n\t ]"),
+    // '!' | '#' - '[' | ']' - '~' | UNICODE
+    CHAR("!|[#-\\[]|[\\]-~]|\\p{L}"),
 
     /*
         COMPARISONS TOKEN

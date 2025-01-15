@@ -4,6 +4,26 @@ import spock.lang.Specification
 
 class KJasonParserTest extends Specification {
 
+    def 'parseString of #value should return #expected'() {
+        given:
+        def tokenizer = new KJasonParser(value)
+
+        and:
+        tokenizer.nextToken$KJason()
+
+        when:
+        def actual = tokenizer.parseString$KJason()
+
+        then:
+        actual == expected
+
+        where:
+        value      || expected
+        "\"\""     || ""
+        "\"a\""    || "a"
+        "\"\\\"\"" || "\""
+    }
+
     def 'parseCharacter of #value should return #expected'() {
         given:
         def tokenizer = new KJasonParser(value)

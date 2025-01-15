@@ -25,13 +25,15 @@ class KJasonParser internal constructor(private val input: InputStream) {
         return lastRead
     }
 
-    private fun expect(vararg tokenType: TokenType) {
-        if (tokenType.none { it == lastRead.type })
-            throw ParserException.expected(tokenType[0], lastRead)
+    private fun matches(vararg tokenTypes: TokenType) = tokenTypes.none { it == lastRead.type }
+
+    private fun expect(vararg tokenTypes: TokenType) {
+        if (matches(*tokenTypes))
+            throw ParserException.expected(tokenTypes[0], lastRead)
     }
 
-    private fun consume(vararg tokenType: TokenType): Token {
-        expect(*tokenType)
+    private fun consume(vararg tokenTypes: TokenType): Token {
+        expect(*tokenTypes)
         val curr = lastRead
         nextToken()
         return curr

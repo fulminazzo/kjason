@@ -4,6 +4,26 @@ import spock.lang.Specification
 
 class KJasonParserTest extends Specification {
 
+    def 'parseCharacter of #value should return #expected'() {
+        given:
+        def tokenizer = new KJasonParser(value)
+
+        and:
+        tokenizer.nextToken$KJason()
+
+        when:
+        def actual = tokenizer.parseCharacter$KJason()
+
+        then:
+        actual == expected
+
+        where:
+        value     || expected
+        'a'       || 'a' as char
+        'A'       || 'A' as char
+        '\\u4321' || '䌡' as char
+    }
+
     def 'parseEscape of #value should return #expected'() {
         given:
         def tokenizer = new KJasonParser(value)
@@ -18,7 +38,7 @@ class KJasonParserTest extends Specification {
         actual == expected
 
         where:
-        value     || expected
+        value   || expected
         "\""    || "\""
         "\\"    || "\\"
         "/"     || "/"

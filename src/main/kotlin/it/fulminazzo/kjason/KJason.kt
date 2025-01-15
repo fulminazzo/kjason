@@ -44,7 +44,8 @@ class KJason private constructor(private val input: InputStream) {
                 }}"
                 is Collection<*> -> "[${data.joinToString(", ") { write(it) }}]"
                 is Array<*> -> "[${data.joinToString(", ") { write(it) }}]"
-                is String, is Number -> data.toString()
+                is String -> "\"$data\""
+                is Number -> data.toString()
                 else -> write(data.javaClass.fields.associateBy({ write(it.name) }, { write(it.get(data)) }))
             }
         }

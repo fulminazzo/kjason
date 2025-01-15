@@ -3,16 +3,16 @@ package it.fulminazzo.kjason
 import java.io.File
 import java.io.InputStream
 
-class KJasonParser internal constructor(private val input: InputStream) {
+class KJasonParser private constructor(private val input: InputStream) {
     private val DIGITS = arrayOf(TokenType.ZERO, TokenType.ONENINE)
 
     private var lastRead: Token = TokenType.eof()
 
-    internal constructor(raw: String) : this(raw.byteInputStream())
+    private constructor(raw: String) : this(raw.byteInputStream())
 
-    internal constructor(file: File) : this(file.inputStream())
+    private constructor(file: File) : this(file.inputStream())
 
-    internal fun nextToken(): Token {
+    private fun nextToken(): Token {
         lastRead = if (input.available() > 0)
             TokenType.fromString(input.read().toChar().toString())
         else TokenType.eof()
@@ -44,6 +44,9 @@ class KJasonParser internal constructor(private val input: InputStream) {
         else parseNumber()
     }
 
+    /**
+     * true := 't' 'r' 'u' 'e'
+     */
     private fun parseTrue(): Boolean {
         consume(TokenType.LOW_T)
         consume(TokenType.LOW_R)
@@ -52,6 +55,9 @@ class KJasonParser internal constructor(private val input: InputStream) {
         return true
     }
 
+    /**
+     * false := 'f' 'a' 'l' 's' 'e'
+     */
     private fun parseFalse(): Boolean {
         consume(TokenType.LOW_F)
         consume(TokenType.LOW_A)
@@ -61,6 +67,9 @@ class KJasonParser internal constructor(private val input: InputStream) {
         return false
     }
 
+    /**
+     * null := 'n' 'u' 'l' 'l'
+     */
     private fun parseNull(): Any? {
         consume(TokenType.LOW_N)
         consume(TokenType.LOW_U)
@@ -72,7 +81,7 @@ class KJasonParser internal constructor(private val input: InputStream) {
     /**
      * object := '{' (ws | members) '}'
      */
-    internal fun parseObject(): Map<String, Any?> {
+    private fun parseObject(): Map<String, Any?> {
         consume(TokenType.OPEN_BRACE)
         parseWS()
         val map = if (!matches(TokenType.CLOSE_BRACE))
@@ -109,7 +118,7 @@ class KJasonParser internal constructor(private val input: InputStream) {
     /**
      * array := '[' (ws | elements) ']'
      */
-    internal fun parseArray(): Array<Any?> {
+    private fun parseArray(): Array<Any?> {
         consume(TokenType.OPEN_BRACKET)
         parseWS()
         val array = if (!matches(TokenType.CLOSE_BRACKET))
@@ -151,7 +160,7 @@ class KJasonParser internal constructor(private val input: InputStream) {
     /**
      * string := '"' character* '"'
      */
-    internal fun parseString(): String {
+    private fun parseString(): String {
         consume(TokenType.DOUBLE_QUOTE)
         val list = mutableListOf<Char>()
         while (!matches(TokenType.DOUBLE_QUOTE)) list.add(parseCharacter())
@@ -162,7 +171,7 @@ class KJasonParser internal constructor(private val input: InputStream) {
     /**
      * character := '!' | '#' - '[' | ']' - '~' | UNICODE | '\' escape
      */
-    internal fun parseCharacter(): Char =
+    private fun parseCharacter(): Char =
         (if (matches(TokenType.BACKSLASH)) {
             consume(TokenType.BACKSLASH)
             parseEscape()
@@ -208,7 +217,7 @@ class KJasonParser internal constructor(private val input: InputStream) {
     /**
      * number := integer fraction exponent
      */
-    internal fun parseNumber(): Double {
+    private fun parseNumber(): Double {
         var integer = parseInteger().toString()
         if (matches(TokenType.DOT)) integer += parseFraction()
         if (matches(TokenType.E)) integer += parseExponent()
@@ -218,7 +227,7 @@ class KJasonParser internal constructor(private val input: InputStream) {
     /**
      * integer := sign digit | sign '1'-'9' digits
      */
-    internal fun parseInteger(): Long {
+    private fun parseInteger(): Long {
         var number: String = parseSign()
         number += if (matches(TokenType.ZERO)) consume(TokenType.ZERO).value
         else parseDigits()

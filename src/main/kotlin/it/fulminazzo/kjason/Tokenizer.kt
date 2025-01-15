@@ -4,12 +4,12 @@ import java.io.ByteArrayInputStream
 import java.io.File
 import java.io.InputStream
 
-class Tokenizer(private val input: InputStream) {
+class Tokenizer internal constructor(private val input: InputStream) {
     private var lastRead: TokenType = TokenType.EOF
 
-    private constructor(raw: String) : this(ByteArrayInputStream(raw.toByteArray()))
+    internal constructor(raw: String) : this(ByteArrayInputStream(raw.toByteArray()))
 
-    private constructor(file: File) : this(file.inputStream())
+    internal constructor(file: File) : this(file.inputStream())
 
     internal fun nextTokenSpaceless(): TokenType {
         var token: TokenType

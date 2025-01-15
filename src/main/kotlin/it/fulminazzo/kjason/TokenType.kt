@@ -23,7 +23,7 @@ enum class TokenType(private val regex: String) {
     CLOSE_BRACKET("\\]"),
 
     // 'CR' | 'LF' | 'TAB' | 'SPACE'
-    SPACE("[\r\n\t ]"),
+    WS("[\r\n\t ]"),
     // '!' | '#' - '[' | ']' - '~' | UNICODE
     CHAR("!|[#-\\[]|[\\]-~]|\\p{L}"),
 

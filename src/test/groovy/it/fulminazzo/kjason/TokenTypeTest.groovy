@@ -24,7 +24,7 @@ class TokenTypeTest extends Specification {
         '7'   || TokenType.ONENINE
         '8'   || TokenType.ONENINE
         '9'   || TokenType.ONENINE
-        ' '   || TokenType.SPACE
+        ' '   || TokenType.WS
         ''    || TokenType.EOF
     }
 

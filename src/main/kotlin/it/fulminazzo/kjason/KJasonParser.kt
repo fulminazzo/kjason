@@ -44,6 +44,17 @@ class KJasonParser internal constructor(private val input: InputStream) {
     }
 
     /**
+     * string := '"' character* '"'
+     */
+    internal fun parseString(): String {
+        consume(TokenType.DOUBLE_QUOTE)
+        val list = mutableListOf<Char>()
+        while (lastRead.type != TokenType.DOUBLE_QUOTE) list.add(parseCharacter())
+        consume(TokenType.DOUBLE_QUOTE)
+        return list.joinToString(separator = "")
+    }
+
+    /**
      * character := '!' | '#' - '[' | ']' - '~' | UNICODE | '\' escape
      */
     internal fun parseCharacter(): Char =

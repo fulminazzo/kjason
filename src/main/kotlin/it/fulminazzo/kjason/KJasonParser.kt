@@ -53,7 +53,7 @@ class KJasonParser internal constructor(private val input: InputStream) {
     }
 
     /**
-     * members := (member ,)* member
+     * members := (member ',')* member
      */
     private fun parseMembers(): List<Pair<Any, Any>> {
         val list = mutableListOf(parseMember())
@@ -90,7 +90,7 @@ class KJasonParser internal constructor(private val input: InputStream) {
     }
 
     /**
-     * elements := (element ,)* element
+     * elements := (element ',')* element
      */
     private fun parseElements(): List<Any> {
         val list = mutableListOf(parseElement())
@@ -186,7 +186,7 @@ class KJasonParser internal constructor(private val input: InputStream) {
     }
 
     /**
-     * integer := sign digit | sign onenine digits
+     * integer := sign digit | sign '1'-'9' digits
      */
     internal fun parseInteger(): Long {
         var number: String = parseSign()
@@ -205,7 +205,7 @@ class KJasonParser internal constructor(private val input: InputStream) {
     }
 
     /**
-     * digit := '0' | ONENINE
+     * digit := '0' | '1'-'9'
      */
     private fun parseDigit(): String = consume(*DIGITS).value
 

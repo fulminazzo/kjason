@@ -25,6 +25,16 @@ enum class TokenType(private val regex: String) {
      */
     // 'E' | 'e'
     E("E|e"),
+    LOW_B("b"),
+    LOW_F("f"),
+    LOW_N("n"),
+    LOW_R("r"),
+    LOW_T("t"),
+    LOW_U("u"),
+
+    DOUBLE_QUOTE("\""),
+    BACKSLASH("\\"),
+    FORWARDSLASH("/"),
 
     EOF("");
 

@@ -44,10 +44,11 @@ class KJasonParser internal constructor(private val input: InputStream) {
     }
 
     /**
-     * value := array | string | number
+     * value := object | array | string | number
      */
     private fun parseValue(): Any {
-        if (matches(TokenType.OPEN_BRACKET)) return parseArray()
+        if (matches(TokenType.OPEN_BRACE)) return parseObject()
+        else if (matches(TokenType.OPEN_BRACKET)) return parseArray()
         else if (matches(TokenType.DOUBLE_QUOTE)) return parseString()
         else return parseNumber()
     }

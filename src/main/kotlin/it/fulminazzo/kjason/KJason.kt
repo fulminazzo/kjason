@@ -40,7 +40,7 @@ class KJason private constructor(private val input: InputStream) {
                 false -> "false"
                 null -> "null"
                 is Map<*, *> -> "{${data.entries.joinToString(", ") {
-                    "${write(it.toString())}: ${write(it.value)}"
+                    "${write(it.key.toString())}: ${write(it.value)}"
                 }}"
                 is Collection<*> -> "[${data.joinToString(", ") { write(it) }}]"
                 is Array<*> -> "[${data.joinToString(", ") { write(it) }}]"

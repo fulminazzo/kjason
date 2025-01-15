@@ -17,6 +17,11 @@ enum class TokenType(private val regex: String) {
     // '1' - '9'
     ONENINE("[1-9]"),
 
+    // '['
+    OPEN_BRACKET("\\["),
+    // ']'
+    CLOSE_BRACKET("\\]"),
+
     // 'CR' | 'LF' | 'TAB' | 'SPACE'
     SPACE("[\r\n\t ]"),
     // '!' | '#' - '[' | ']' - '~' | UNICODE

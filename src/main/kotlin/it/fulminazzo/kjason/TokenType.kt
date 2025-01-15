@@ -34,7 +34,7 @@ enum class TokenType(private val regex: String) {
         fun fromString(read: String): Token {
             for (tokenType in entries.filter { it != EOF })
                 if (read.matches(Regex(tokenType.regex)))
-                    return Token(tokenType, tokenType.regex)
+                    return Token(tokenType, read)
             return eof()
         }
 

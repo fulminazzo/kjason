@@ -54,11 +54,11 @@ class KJasonParser internal constructor(private val input: InputStream) {
     /**
      * integer := sign digit | sign onenine digits
      */
-    fun parseInteger(): Int {
+    fun parseInteger(): Long {
         var number: String = parseSign()
         number += if (matches(TokenType.ZERO)) consume(TokenType.ZERO).value
         else parseDigits()
-        return number.toInt()
+        return number.toLong()
     }
 
     /**

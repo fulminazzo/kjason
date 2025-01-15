@@ -3,7 +3,7 @@ package it.fulminazzo.kjason
 class Tokenizer {
 }
 
-enum class TokenType(val regex: String) {
+enum class TokenType(private val regex: String) {
     // '-'
     MINUS("-"),
 

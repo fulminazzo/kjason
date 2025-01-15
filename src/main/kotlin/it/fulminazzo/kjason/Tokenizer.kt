@@ -11,7 +11,7 @@ enum class TokenType(val regex: String) {
     ZERO("0"),
 
     // '1'.'9'
-    ONENINE("1-9"),
+    ONENINE("[1-9]"),
 
     // 'CR' | 'LF' | 'TAB' | 'SPACE'
     SPACE("[\r\n\t ]"),

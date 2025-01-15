@@ -15,7 +15,7 @@ class KJasonParser internal constructor(private val input: InputStream) {
     internal fun nextTokenSpaceless(): Token {
         var token: Token
         do token = nextToken()
-        while (token.type == TokenType.SPACE)
+        while (token.type == TokenType.WS)
         return token
     }
 
@@ -41,6 +41,23 @@ class KJasonParser internal constructor(private val input: InputStream) {
                 return curr
             }
         throw ParserException.expected(tokenTypes[0], lastRead)
+    }
+
+    /**
+     * element := ws value ws
+     */
+    private fun <T> parseElement(): T {
+        parseWS()
+        val t = parseValue()
+        parseWS()
+        return t
+    }
+
+    /**
+     * ws := [\r\n\t ]*
+     */
+    private fun parseWS() {
+        while (matches(TokenType.WS)) nextToken()
     }
 
     /**

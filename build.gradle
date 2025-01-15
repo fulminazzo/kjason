@@ -1,0 +1,33 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '2.0.21'
+    id 'groovy'
+    id 'jacoco-report-aggregation'
+}
+
+group = 'it.fulminazzo'
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation libs.spock
+    testRuntimeOnly libs.byte.buddy
+}
+
+test {
+    useJUnitPlatform()
+}
+
+testCodeCoverageReport {
+    dependsOn test
+    reports {
+        xml.required = true
+        csv.required = true
+    }
+}
+
+kotlin {
+    jvmToolchain(8)
+}

@@ -9,7 +9,7 @@ class KJasonTest extends Specification {
         def tokenizer = new KJason(value)
 
         and:
-        tokenizer.nextToken$KJason()
+        tokenizer.nextToken()
 
         when:
         def actual = tokenizer.parseValue()
@@ -24,9 +24,9 @@ class KJasonTest extends Specification {
         'null'                                   || null
         '{"1": "one", "2": "two", "3": "three"}' || ['1': 'one', '2': 'two', '3': 'three']
         '[1, 2, 3]'                              || [1, 2, 3]
-        '"Hello, World!"'                         | 'Hello, World!'
-        '1'                                       | 1
-        '1.0'                                     | 1.0
+        '"Hello, World!"'                        || 'Hello, World!'
+        '1'                                      || 1
+        '1.0'                                    || 1.0
     }
 
     def 'parseObject of #value should return #expected'() {
@@ -34,10 +34,10 @@ class KJasonTest extends Specification {
         def tokenizer = new KJason(value)
 
         and:
-        tokenizer.nextToken$KJason()
+        tokenizer.nextToken()
 
         when:
-        def actual = tokenizer.parseObject$KJason()
+        def actual = tokenizer.parseObject()
 
         then:
         actual == expected
@@ -56,10 +56,10 @@ class KJasonTest extends Specification {
         def tokenizer = new KJason(value)
 
         and:
-        tokenizer.nextToken$KJason()
+        tokenizer.nextToken()
 
         when:
-        def actual = tokenizer.parseArray$KJason()
+        def actual = tokenizer.parseArray()
 
         then:
         actual == expected
@@ -77,10 +77,10 @@ class KJasonTest extends Specification {
         def tokenizer = new KJason(value)
 
         and:
-        tokenizer.nextToken$KJason()
+        tokenizer.nextToken()
 
         when:
-        def actual = tokenizer.parseString$KJason()
+        def actual = tokenizer.parseString()
 
         then:
         actual == expected
@@ -97,10 +97,10 @@ class KJasonTest extends Specification {
         def tokenizer = new KJason(value)
 
         and:
-        tokenizer.nextToken$KJason()
+        tokenizer.nextToken()
 
         when:
-        def actual = tokenizer.parseCharacter$KJason()
+        def actual = tokenizer.parseCharacter()
 
         then:
         actual == expected
@@ -117,7 +117,7 @@ class KJasonTest extends Specification {
         def tokenizer = new KJason(value)
 
         and:
-        tokenizer.nextToken$KJason()
+        tokenizer.nextToken()
 
         when:
         def actual = tokenizer.parseEscape()
@@ -143,10 +143,10 @@ class KJasonTest extends Specification {
         def tokenizer = new KJason(value)
 
         and:
-        tokenizer.nextToken$KJason()
+        tokenizer.nextToken()
 
         when:
-        def actual = tokenizer.parseNumber$KJason()
+        def actual = tokenizer.parseNumber()
 
         then:
         actual == expected
@@ -166,10 +166,10 @@ class KJasonTest extends Specification {
         def tokenizer = new KJason(value)
 
         and:
-        tokenizer.nextToken$KJason()
+        tokenizer.nextToken()
 
         when:
-        def actual = tokenizer.parseInteger$KJason()
+        def actual = tokenizer.parseInteger()
 
         then:
         actual == expected
@@ -192,7 +192,7 @@ class KJasonTest extends Specification {
         def tokenizer = new KJason(value)
 
         when:
-        def read = tokenizer.nextToken$KJason().type
+        def read = tokenizer.nextToken().type
 
         then:
         read == expected

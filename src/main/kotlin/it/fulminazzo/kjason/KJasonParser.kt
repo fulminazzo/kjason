@@ -51,11 +51,25 @@ class KJasonParser internal constructor(private val input: InputStream) {
             var unicode = "$escapeChar${consume(TokenType.LOW_U).value}"
             for (i in 1..4) unicode += parseHex()
             return unicode.toByteArray().toString(Charset.forName("UNICODE"))
-        } else return "$escapeChar${consume(TokenType.E,
-            TokenType.LOW_B, TokenType.LOW_F, TokenType.LOW_N,
-            TokenType.LOW_R, TokenType.LOW_T, TokenType.DOUBLE_QUOTE,
-            TokenType.BACKSLASH, TokenType.FORWARDSLASH
-        ).value}"
+        } else return when (consume(
+            TokenType.DOUBLE_QUOTE,
+            TokenType.BACKSLASH,
+            TokenType.FORWARDSLASH,
+            TokenType.LOW_B,
+            TokenType.LOW_F,
+            TokenType.LOW_N,
+            TokenType.LOW_R,
+            TokenType.LOW_T
+        ).type) {
+            TokenType.DOUBLE_QUOTE -> "\""
+            TokenType.BACKSLASH -> "\\"
+            TokenType.FORWARDSLASH -> "//"
+            TokenType.LOW_B -> "\b"
+            TokenType.LOW_F -> "\u000c"
+            TokenType.LOW_N -> "\n"
+            TokenType.LOW_R -> "\r"
+            else -> "\t"
+        }
     }
 
     /**

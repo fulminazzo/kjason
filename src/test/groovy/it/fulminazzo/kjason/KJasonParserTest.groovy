@@ -47,7 +47,7 @@ class KJasonParserTest extends Specification {
         '{}'                               || [:]
         '{\r\t\n \r\t\n \r\t\n \r\t\n }'   || [:]
         '{"one": 1, "two": 2, "three": 3}' || ['one': 1, 'two': 2, 'three': 3]
-        '{"Hello": true, "world": false}'  || ['Hello': true, 'world': true]
+        '{"Hello": true, "world": false}'  || ['Hello': true, 'world': false]
         '{"1" : 2}'                        || ['1': 2]
     }
 

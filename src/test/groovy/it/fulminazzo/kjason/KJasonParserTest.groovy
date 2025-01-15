@@ -4,6 +4,27 @@ import spock.lang.Specification
 
 class KJasonParserTest extends Specification {
 
+    def 'parseArray of #value should return #expected'() {
+        given:
+        def tokenizer = new KJasonParser(value)
+
+        and:
+        tokenizer.nextToken$KJason()
+
+        when:
+        def actual = tokenizer.parseArray$KJason()
+
+        then:
+        actual == expected
+
+        where:
+        value                            || expected
+        '[]'                             || [].toArray()
+        '[\r\t\n \r\t\n \r\t\n \r\t\n ]' || [].toArray()
+        '[1, 2, 3]'                      || [1, 2, 3].toArray()
+        '["Hello"]'                      || ['Hello'].toArray()
+    }
+
     def 'parseString of #value should return #expected'() {
         given:
         def tokenizer = new KJasonParser(value)

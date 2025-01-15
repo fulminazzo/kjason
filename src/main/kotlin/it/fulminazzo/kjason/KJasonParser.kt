@@ -12,13 +12,6 @@ class KJasonParser internal constructor(private val input: InputStream) {
 
     internal constructor(file: File) : this(file.inputStream())
 
-    internal fun nextTokenSpaceless(): Token {
-        var token: Token
-        do token = nextToken()
-        while (token.type == TokenType.WS)
-        return token
-    }
-
     internal fun nextToken(): Token {
         lastRead = if (input.available() > 0)
             TokenType.fromString(input.read().toChar().toString())
@@ -27,11 +20,6 @@ class KJasonParser internal constructor(private val input: InputStream) {
     }
 
     private fun matches(vararg tokenTypes: TokenType) = tokenTypes.any { it.matches(lastRead) }
-
-    private fun expect(vararg tokenTypes: TokenType) {
-        if (!matches(*tokenTypes))
-            throw ParserException.expected(tokenTypes[0], lastRead)
-    }
 
     private fun consume(vararg tokenTypes: TokenType): Token {
         for (type in tokenTypes)

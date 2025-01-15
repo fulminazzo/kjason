@@ -44,9 +44,17 @@ class KJasonParser internal constructor(private val input: InputStream) {
     }
 
     /**
+     * value := string | number
+     */
+    private fun parseValue(): Any {
+        if (matches(TokenType.DOUBLE_QUOTE)) return parseString()
+        else return parseNumber()
+    }
+
+    /**
      * element := ws value ws
      */
-    private fun <T> parseElement(): T {
+    private fun parseElement(): Any {
         parseWS()
         val t = parseValue()
         parseWS()

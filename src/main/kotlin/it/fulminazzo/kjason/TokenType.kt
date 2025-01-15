@@ -26,9 +26,9 @@ enum class TokenType(private val regex: String) {
     // ']'
     CLOSE_BRACKET("\\]"),
     // '{'
-    OPEN_BRACE("{"),
+    OPEN_BRACE("\\{"),
     // '}'
-    CLOSE_BRACE("}"),
+    CLOSE_BRACE("\\}"),
 
     // 'CR' | 'LF' | 'TAB' | 'SPACE'
     WS("[\r\n\t ]"),

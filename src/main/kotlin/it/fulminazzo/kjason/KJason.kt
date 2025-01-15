@@ -3,7 +3,7 @@ package it.fulminazzo.kjason
 import java.io.File
 import java.io.InputStream
 
-class KJasonParser private constructor(private val input: InputStream) {
+class KJason private constructor(private val input: InputStream) {
     private val DIGITS = arrayOf(TokenType.ZERO, TokenType.ONENINE)
 
     private var lastRead: Token = TokenType.eof()

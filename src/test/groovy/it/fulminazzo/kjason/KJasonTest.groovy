@@ -2,11 +2,11 @@ package it.fulminazzo.kjason
 
 import spock.lang.Specification
 
-class KJasonParserTest extends Specification {
+class KJasonTest extends Specification {
 
     def 'parseValue of #value should return #expected'() {
         given:
-        def tokenizer = new KJasonParser(value)
+        def tokenizer = new KJason(value)
 
         and:
         tokenizer.nextToken$KJason()
@@ -31,7 +31,7 @@ class KJasonParserTest extends Specification {
 
     def 'parseObject of #value should return #expected'() {
         given:
-        def tokenizer = new KJasonParser(value)
+        def tokenizer = new KJason(value)
 
         and:
         tokenizer.nextToken$KJason()
@@ -53,7 +53,7 @@ class KJasonParserTest extends Specification {
 
     def 'parseArray of #value should return #expected'() {
         given:
-        def tokenizer = new KJasonParser(value)
+        def tokenizer = new KJason(value)
 
         and:
         tokenizer.nextToken$KJason()
@@ -74,7 +74,7 @@ class KJasonParserTest extends Specification {
 
     def 'parseString of #value should return #expected'() {
         given:
-        def tokenizer = new KJasonParser(value)
+        def tokenizer = new KJason(value)
 
         and:
         tokenizer.nextToken$KJason()
@@ -94,7 +94,7 @@ class KJasonParserTest extends Specification {
 
     def 'parseCharacter of #value should return #expected'() {
         given:
-        def tokenizer = new KJasonParser(value)
+        def tokenizer = new KJason(value)
 
         and:
         tokenizer.nextToken$KJason()
@@ -114,7 +114,7 @@ class KJasonParserTest extends Specification {
 
     def 'parseEscape of #value should return #expected'() {
         given:
-        def tokenizer = new KJasonParser(value)
+        def tokenizer = new KJason(value)
 
         and:
         tokenizer.nextToken$KJason()
@@ -140,7 +140,7 @@ class KJasonParserTest extends Specification {
 
     def 'parseNumber of #value should return #expected'() {
         given:
-        def tokenizer = new KJasonParser(value)
+        def tokenizer = new KJason(value)
 
         and:
         tokenizer.nextToken$KJason()
@@ -163,7 +163,7 @@ class KJasonParserTest extends Specification {
 
     def 'parseInteger of #value should return #expected'() {
         given:
-        def tokenizer = new KJasonParser(value)
+        def tokenizer = new KJason(value)
 
         and:
         tokenizer.nextToken$KJason()
@@ -189,7 +189,7 @@ class KJasonParserTest extends Specification {
 
     def 'nextToken of #value should return #expected'() {
         given:
-        def tokenizer = new KJasonParser(value)
+        def tokenizer = new KJason(value)
 
         when:
         def read = tokenizer.nextToken$KJason().type

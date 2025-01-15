@@ -47,6 +47,9 @@ enum class TokenType(private val regex: String) {
     LOW_T("t"),
     LOW_U("u"),
     LOW_L("l"),
+    LOW_A("a"),
+    LOW_S("s"),
+    LOW_E("e"),
 
     DOUBLE_QUOTE("\""),
     BACKSLASH("\\\\"),
